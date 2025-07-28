@@ -6,8 +6,11 @@ import (
 	"log"
 	"os"
 	"path/filepath"
+	"time"
 
 	"gopkg.in/yaml.v3"
+	"github.com/pquerna/otp/totp"
+	"github.com/atotto/clipboard"
 )
 
 func configPath() string {
@@ -47,5 +50,14 @@ func main() {
 		log.Fatalf("%s not found", key)
 	}
 
-	fmt.Printf(secret)
+	code, err := totp.GenerateCode(secret, time.Now())
+	if err != nil {
+		log.Fatalf("Fehler beim Generieren des TOTP-Codes: %v", err)
+	}
+
+	err = clipboard.WriteAll(code)
+	if err != nil {
+		fmt.Printf(code)
+	}
+
 }
