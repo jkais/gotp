@@ -1,0 +1,62 @@
+name: Build and Release
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'   # z.B. v1.0.0
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Check out code
+      uses: actions/checkout@v3
+
+    - name: Set up Go
+      uses: actions/setup-go@v4
+      with:
+        go-version: '1.24.5'
+
+    - name: Build binaries
+      run: |
+        mkdir dist
+        GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -o dist/gotp
+        GOOS=windows GOARCH=amd64 CGO_ENABLED=0 go build -o dist/gotp-windows-amd64.exe
+        GOOS=darwin GOARCH=amd64 CGO_ENABLED=0 go build -o dist/gotp-darwin-amd64
+
+    - name: Create release
+      id: create_release
+      uses: actions/create-release@v1
+      with:
+        tag_name: ${{ github.ref_name }}
+        release_name: Release ${{ github.ref_name }}
+        draft: false
+        prerelease: false
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Upload Linux binary
+      uses: actions/upload-release-asset@v1
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: dist/gotp-linux-amd64
+        asset_name: gotp-linux-amd64
+        asset_content_type: application/octet-stream
+
+    - name: Upload Windows binary
+      uses: actions/upload-release-asset@v1
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: dist/gotp-windows-amd64.exe
+        asset_name: gotp-windows-amd64.exe
+        asset_content_type: application/octet-stream
+
+    - name: Upload macOS binary
+      uses: actions/upload-release-asset@v1
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: dist/gotp-darwin-amd64
+        asset_name: gotp-darwin-amd64
+        asset_content_type: application/octet-stream
+
