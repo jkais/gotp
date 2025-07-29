@@ -12,11 +12,13 @@ Just download the binary:
 
 [![GitHub release](https://img.shields.io/github/v/release/jkais/gotp)](https://github.com/jkais/gotp/releases)
 
-Put your secrets into *~/.config/gotp/secrets.yaml* like this
+Put your secrets into `~config/gotp/secrets.yaml` like this
 ```
 key1: secret
 key2: anothersecret
 ```
+
+And run the binary. For details see **Usage**.
 
 ## Usage
 
