@@ -1,5 +1,9 @@
 # GOTP
 
+[![Build Status](https://github.com/jkais/gotp/actions/workflows/release.yml/badge.svg)](https://github.com/jkais/gotp/actions/workflows/release.yml)
+
+
+
 Generate TOTPs with Go. Download the binary, put your secrets into the YAML. Ready to go: Call it with the name of your secret and the token will be copied to your clipboard.
 
 ## Installation
