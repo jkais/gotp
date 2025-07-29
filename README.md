@@ -26,4 +26,4 @@ And run the binary. For details see **Usage**.
 You can generate a list of all the keys of your secrets with `gotp --list`. This is very useful to combine it with things like *wofi* or *rofi*. I run it with `gotp --list | wofi --dmenu --prompt "TOPT" | xargs gotp`.
 
 ### Generate token
-Run it with `gotp <key>`, where *&tl;key&gt;* is the key from your *secrets.yaml*. If possible, the token will be copied to your clipboard. If not, it will be printed to stdout.
+Run it with `gotp <key>`, where *&lt;key&gt;* is the key from your *secrets.yaml*. If possible, the token will be copied to your clipboard. If not, it will be printed to stdout.
