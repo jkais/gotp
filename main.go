@@ -3,7 +3,6 @@ package main
 import (
 	"flag"
 	"fmt"
-	"io/ioutil"
 	"log"
 	"os"
 	"path/filepath"
@@ -20,7 +19,7 @@ func main() {
 	flag.Parse()
 
 	if !*list && len(flag.Args()) != 1 {
-		fmt.Println("Usage:\ngotp --list - lists all available keys\ngotp <key>  - copys a token for <key> to the clipboard\n")
+		fmt.Println("Usage:\ngotp --list - lists all available keys\ngotp <key>  - copys a token for <key> to the clipboard")
 		os.Exit(1)
 	}
 
@@ -62,7 +61,7 @@ func copyToken(key string) {
 
 	err = clipboard.WriteAll(code)
 	if err != nil {
-		fmt.Printf(code)
+		fmt.Print(code)
 	}
 }
 
@@ -73,7 +72,7 @@ func configPath() string {
 
 func mustLoadSecrets() map[string]string {
 	path := configPath()
-	data, err := ioutil.ReadFile(path)
+	data, err := os.ReadFile(path)
 	if err != nil {
 		log.Fatalf("error reading %s: %v", path, err)
 	}
